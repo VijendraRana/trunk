@@ -1,0 +1,549 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="AriaPM.Views.PalletPage" 
+            Title="{Binding Title}"
+            BackgroundColor="White" WidthRequest="850" HeightRequest="850" x:Name="PalletContent">
+    <ContentPage.Resources>
+        <StyleSheet Source="/Style/Style.css"/>
+    </ContentPage.Resources>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Add" Clicked="AddPallet_Clicked">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="UWP" Value="add.png"/>
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+        <ToolbarItem Text="Booking" Clicked="ToolbarBooking_Clicked">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="UWP" Value="Resources/booking.png"/>
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+        <ToolbarItem Text="Dispatch" Clicked="ToolbarDispatch_Clicked">
+            <ToolbarItem.Icon>
+                <OnPlatform x:TypeArguments="FileImageSource">
+                    <On Platform="UWP" Value="Resources/dispatch.png"/>
+                </OnPlatform>
+            </ToolbarItem.Icon>
+        </ToolbarItem>
+    </ContentPage.ToolbarItems>
+    <AbsoluteLayout>
+        <ScrollView AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0,0,1,1">
+            <StackLayout>
+
+                <Grid Padding="0" Margin="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="280"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="300"/>                        
+                    </Grid.RowDefinitions>
+
+                    <Frame Grid.Row="0" Grid.Column="0" BorderColor="DarkSlateGray" Margin="10,5,2,5" Padding="0" VerticalOptions="Start">
+                        <Grid Padding="0" Margin="10,10,10,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="120"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="25"/>
+                                <RowDefinition Height="53"/>
+                                <RowDefinition Height="53"/>
+                                <RowDefinition Height="53"/>
+                                <RowDefinition Height="53"/>
+                                <RowDefinition Height="*"/>
+
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.ColumnSpan="3" Grid.Row="0" Text="SEARCH CRITERIA:" FontAttributes="Bold" Margin="5,2,2,2" TextColor="DarkSlateGray" FontSize="15" FontFamily="Champagne &amp; Limousines" VerticalOptions="Center"/>
+
+                            <Label Grid.Column="0" Grid.Row="1" Text="Store" Margin="5,2,2,2" TextColor="DarkSlateGray" 
+                                FontSize="12" FontFamily="Champagne &amp; Limousines" VerticalOptions="Start"/>
+                            <Picker ItemsSource="{Binding Stores}" ItemDisplayBinding="{Binding Name}"  Grid.Column="0" 
+                                Grid.Row="1" x:Name="SearchStore" Margin="5,5,2,2" FontSize="12" VerticalOptions="End"/>
+
+                            <Label Grid.Column="1" Grid.Row="1" Text="Status" Margin="5,2,2,2" TextColor="DarkSlateGray" 
+                                FontSize="12" FontFamily="Champagne &amp; Limousines" VerticalOptions="Start"/>
+                            <Picker ItemsSource="{Binding Status}" ItemDisplayBinding="{Binding Name}"  Grid.Column="1" 
+                                Grid.Row="1" x:Name="SearchStatus" Margin="5,2,2,2" FontSize="12" VerticalOptions="End"/>
+
+                            <Label Grid.Column="0" Grid.Row="2" Text="Category" Margin="5,2,2,2" TextColor="DarkSlateGray" 
+                                FontSize="12" FontFamily="Champagne &amp; Limousines" VerticalOptions="Start"/>
+                            <Picker ItemsSource="{Binding Categories}" ItemDisplayBinding="{Binding Name}" Grid.Column="0" 
+                                Grid.Row="2" x:Name="SearchCategory" Margin="5,2,2,2" FontSize="12" VerticalOptions="End"/>
+
+                            <Label Grid.Column="1" Grid.Row="2" Text="Barcode" Margin="5,2,2,2" TextColor="DarkSlateGray" FontSize="12" 
+                               FontFamily="Champagne &amp; Limousines" VerticalOptions="Start"/>
+                            <Entry Grid.Column="1" Grid.Row="2" x:Name="SearchBarcode" Margin="5,2,2,2" FontSize="12" 
+                               VerticalOptions="End"/>
+
+                            <Label Grid.Column="0" Grid.Row="3" Text="Contents" Margin="5,2,2,2" TextColor="DarkSlateGray" FontSize="12" 
+                               FontFamily="Champagne &amp; Limousines" VerticalOptions="Start"/>
+                            <Entry Grid.Column="0" Grid.Row="3" x:Name="SearchDescription" Margin="5,2,2,2" FontSize="12" 
+                               VerticalOptions="End"/>
+
+                            <Label Grid.Column="1" Grid.Row="3" Text="Pallet ID" Margin="5,2,2,2" TextColor="DarkSlateGray" FontSize="12" 
+                               FontFamily="Champagne &amp; Limousines" VerticalOptions="Start"/>
+                            <Entry Grid.Column="1" Grid.Row="3" x:Name="SearchPalletId" Margin="5,2,2,2" FontSize="12" 
+                               VerticalOptions="End"/>
+
+                            <Button Grid.Column="1" Grid.Row="4" Clicked="Button_Clicked" Margin="5,2,2,2" HeightRequest="30" VerticalOptions="Start"  
+                                    Text="Search" BackgroundColor="#3897f0" TextColor="White" FontSize="12"/>
+                        </Grid>
+                    </Frame>
+
+                    <Frame Grid.Row="0" Grid.Column="1" BorderColor="DarkSlateGray" Margin="0,5,5,5" Padding="0" VerticalOptions="Start">
+                        <Grid Padding="0" Margin="10,10,10,10">
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="35"/>
+                            </Grid.RowDefinitions>
+                            <Frame Grid.Row="0" BackgroundColor="#FF1E64AA" BorderColor="DarkSlateGray" Padding="0">
+                                <Grid Padding="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="60*"/>
+                                        <ColumnDefinition Width="90*"/>
+                                        <ColumnDefinition Width="85*"/>
+                                        <ColumnDefinition Width="86*"/>
+                                        <ColumnDefinition Width="75*"/>
+                                        <ColumnDefinition Width="60*"/>
+                                        <ColumnDefinition Width="70*"/>
+                                        <ColumnDefinition Width="80*"/>
+                                        <ColumnDefinition Width="72*"/>
+                                        <ColumnDefinition Width="80*"/>
+                                        <ColumnDefinition Width="80*"/>
+                                        <ColumnDefinition Width="60*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Margin="10,0,10,0" FontSize="13" FontAttributes="Bold"  TextColor="White" Text="Pallet Id" VerticalOptions="Center" Grid.Column="0"/>
+                                    <Label Margin="10,0,10,0" FontSize="13" FontAttributes="Bold"  TextColor="White" Text="Status" VerticalOptions="Center" Grid.Column="1"/>
+                                    <Label Margin="10,0,10,0" FontSize="13" FontAttributes="Bold"  TextColor="White" Text="Consignment" VerticalOptions="Center" Grid.Column="2"/>
+                                    <Label Margin="10,0,10,0" FontSize="13" FontAttributes="Bold"  TextColor="White" Text="Store Request" VerticalOptions="Center" Grid.Column="3"/>
+                                    <Label Margin="10,0,10,0" FontSize="13" FontAttributes="Bold"  TextColor="White" Text="Pallet Type" VerticalOptions="Center" Grid.Column="4"/>
+                                    <Label Margin="10,0,10,0" FontSize="13" FontAttributes="Bold"  TextColor="White" Text="Supplier" VerticalOptions="Center" Grid.Column="5"/>
+                                    <Label Margin="10,0,10,0" FontSize="13" FontAttributes="Bold"  TextColor="White" Text="Category" VerticalOptions="Center" Grid.Column="6"/>
+                                    <Label Margin="10,0,10,0" FontSize="13" FontAttributes="Bold"  TextColor="White" Text="Wrapped Date" VerticalOptions="Center" Grid.Column="7"/>
+                                    <Label Margin="10,0,10,0" FontSize="13" FontAttributes="Bold"  TextColor="White" Text="Sent Date" VerticalOptions="Center" Grid.Column="8"/>
+                                    <Label Margin="10,0,10,0" FontSize="13" FontAttributes="Bold"  TextColor="White" Text="Received Date" VerticalOptions="Center" Grid.Column="9"/>
+                                    <Label Margin="10,0,10,0" FontSize="13" FontAttributes="Bold"  TextColor="White" Text="Weight" VerticalOptions="Center" Grid.Column="10"/>
+
+                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="0" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="1" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="2" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="3" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="4" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="5" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="6" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="7" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="8" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="9" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="10" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+
+                                </Grid>
+                            </Frame>
+                            <ListView Grid.Row="1" x:Name="PalletListView"
+                            ItemsSource="{Binding Items}"
+                            VerticalOptions="FillAndExpand"
+                            RefreshCommand="{Binding LoadItemsCommand}"
+                            IsPullToRefreshEnabled="true"
+                            IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                            CachingStrategy="RecycleElement"
+                            ItemSelected="OnItemSelected"     
+                            ItemTapped="PalletListView_ItemTapped"
+                            SeparatorVisibility="None"
+                            SelectionMode="None"
+                            HasUnevenRows="True">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <Frame Padding="0" BorderColor="DarkSlateGray">
+                                                <Grid Padding="0" RowSpacing="0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="60*"/>
+                                                        <ColumnDefinition Width="90*"/>
+                                                        <ColumnDefinition Width="85*"/>
+                                                        <ColumnDefinition Width="86*"/>
+                                                        <ColumnDefinition Width="75*"/>
+                                                        <ColumnDefinition Width="60*"/>
+                                                        <ColumnDefinition Width="70*"/>
+                                                        <ColumnDefinition Width="80*"/>
+                                                        <ColumnDefinition Width="72*"/>
+                                                        <ColumnDefinition Width="80*"/>
+                                                        <ColumnDefinition Width="80*"/>
+                                                        <ColumnDefinition Width="60*"/>
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Label FontSize="13" Margin="10,0,10,0" Text="{Binding Id}" VerticalOptions="Center" Grid.Column="0"/>
+                                                    <Label FontSize="13" Margin="10,0,10,0" Text="{Binding Status}" VerticalOptions="Center" HorizontalOptions="CenterAndExpand" Grid.Column="1">
+                                                    </Label>
+                                                    <Image Source="Resources/edit.png" Grid.Column="1" Margin="-5,0,0,0" WidthRequest="15" HorizontalOptions="Start" VerticalOptions="Center">
+                                                        <Image.GestureRecognizers>
+                                                            <TapGestureRecognizer
+                                                    Tapped="OnStatus_Tapped"
+                                                    ClassId="{Binding Status}"
+                                                    CommandParameter="{Binding Id}"
+                                                    NumberOfTapsRequired="1"/>
+                                                        </Image.GestureRecognizers>
+                                                    </Image>
+                                                    <Label FontSize="13" Margin="10,0,10,0" Text="{Binding ConNumber}" VerticalOptions="Center" Grid.Column="2"/>
+                                                    <Label FontSize="13" Margin="10,0,10,0" Text="{Binding StoreRequest}" VerticalOptions="Center" Grid.Column="3"/>
+                                                    <Label FontSize="13" Margin="10,0,10,0" Text="{Binding PalletType}" VerticalOptions="Center" Grid.Column="4"/>
+                                                    <Label FontSize="13" Margin="10,0,10,0" Text="{Binding Supplier}" VerticalOptions="Center" Grid.Column="5"/>
+                                                    <Label FontSize="13" Margin="10,0,10,0" Text="{Binding Category}" VerticalOptions="Center" Grid.Column="6"/>
+                                                    <Label FontSize="13" Margin="10,0,10,0" Text="{Binding WrappedDate}" VerticalOptions="Center" Grid.Column="7"/>
+                                                    <Label FontSize="13" Margin="10,0,10,0" Text="{Binding SentDate}" VerticalOptions="Center" Grid.Column="8"/>
+                                                    <Label FontSize="13" Margin="10,0,10,0" Text="{Binding ReceivedDate}" VerticalOptions="Center" Grid.Column="9"/>
+                                                    <Label FontSize="13" Margin="10,0,10,0" Text="{Binding Weight}" VerticalOptions="Center" Grid.Column="10"/>
+
+                                                    <Image Source="Resources/edit.png" Grid.Column="11" Margin="3,0,0,0" WidthRequest="15" HorizontalOptions="Start" 
+                                               VerticalOptions="Center">
+                                                        <Image.GestureRecognizers>
+                                                            <TapGestureRecognizer
+                                                    Tapped="OnEdit_Tapped"
+                                                    CommandParameter="{Binding Id}"
+                                                    NumberOfTapsRequired="1" 
+                                                    />
+                                                        </Image.GestureRecognizers>
+                                                    </Image>
+
+                                                    <Image Source="Resources/delete.png" Grid.Column="11" Margin="0,0,20,0" WidthRequest="15" HorizontalOptions="End" 
+                                               VerticalOptions="Center">
+                                                        <Image.GestureRecognizers>
+                                                            <TapGestureRecognizer
+                                                    Tapped="OnDelete_TappedAsync"
+                                                    CommandParameter="{Binding Id}"
+                                                    NumberOfTapsRequired="1" 
+                                                    />
+                                                        </Image.GestureRecognizers>
+                                                    </Image>
+
+
+                                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="0" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="1" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="2" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="3" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="4" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="5" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="6" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="7" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="8" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="9" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="10" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                                </Grid>
+                                            </Frame>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+
+                            <Grid Grid.Row="2" Padding="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="50"/>
+                                </Grid.ColumnDefinitions>
+
+                                <BoxView Grid.Row="0" Grid.ColumnSpan="4"  Margin="0" BackgroundColor="DarkSlateGray" HeightRequest="2" VerticalOptions="Start"/>
+                                <Label x:Name="lblTotalRecords" Grid.Row="1" TextColor="Blue" FontSize="15" Grid.Column="0"/>
+                                <Button x:Name="btnPrev" Grid.Row="1" Grid.Column="1" FontSize="10" FontAttributes="Bold" Text="Prev" Clicked="Prev_Clicked" />
+                                <Label x:Name="lblPageNumber" Grid.Row="1" Margin="0" Grid.Column="2" FontSize="12" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" FontAttributes="Bold"/>
+                                <Button x:Name="btnNext" Grid.Row="1" HorizontalOptions="StartAndExpand" Grid.Column="3" FontSize="10" FontAttributes="Bold" Text="Next" Clicked="Next_Clicked" />
+                            </Grid>
+                        </Grid>
+                    </Frame>
+
+                </Grid>
+                <Grid Padding="0" Margin="0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="160"/>
+                        <ColumnDefinition Width="280"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="285"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <Frame Grid.Row="0" Grid.Column="0" BorderColor="DarkSlateGray" Margin="10,5,5,5" Padding="0" HorizontalOptions="Start" VerticalOptions="Start">
+                        <Grid Padding="0" Margin="10,10,10,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="25"/>
+                                <RowDefinition Height="53"/>
+                                <RowDefinition Height="53"/>
+                                <RowDefinition Height="53"/>
+                                <RowDefinition Height="53"/>
+                                <RowDefinition Height="*"/>
+
+                            </Grid.RowDefinitions>
+
+
+                            <Label Grid.ColumnSpan="2" Grid.Row="0" Text="PALLET INFO:" FontAttributes="Bold" Margin="5,2,2,2" TextColor="DarkSlateGray" FontSize="15" FontFamily="Champagne &amp; Limousines" VerticalOptions="Center"/>
+
+                            <Label Grid.Column="0" Grid.Row="1" Text="Category" Margin="5,2,2,2" TextColor="DarkSlateGray" 
+                                   FontSize="12" FontFamily="Champagne &amp; Limousines" VerticalOptions="Start"/>
+                            <Picker ItemsSource="{Binding Categories}" ItemDisplayBinding="{Binding Name}" 
+                                   Grid.Column="0" Grid.Row="1" x:Name="Category" Margin="5,5,2,2" FontSize="12" VerticalOptions="End"/>
+
+                            <Label Grid.Column="0" Grid.Row="2" Text="Weight" Margin="5,2,2,2" TextColor="DarkSlateGray" 
+                                   FontSize="12" FontFamily="Champagne &amp; Limousines" VerticalOptions="Start"/>
+                            <Entry Grid.Column="0" Grid.Row="2" x:Name="Weight" Margin="5,5,2,2" FontSize="12" VerticalOptions="End"/>
+
+                            <Label Grid.Column="0" Grid.Row="3" Text="Pallet Type" Margin="5,2,2,2" TextColor="DarkSlateGray" 
+                                   FontSize="12" FontFamily="Champagne &amp; Limousines" VerticalOptions="Start"/>
+                            <Entry Grid.Column="0" Grid.Row="3" x:Name="PalletType" Margin="5,5,2,2" FontSize="12" VerticalOptions="End"/>
+                        </Grid>
+                    </Frame>
+
+                    <Frame Grid.Row="0" Grid.Column="1" BorderColor="DarkSlateGray" Margin="5,5,5,5" Padding="0" HorizontalOptions="Start" VerticalOptions="Start">
+                        <Grid Padding="0" Margin="10,10,10,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="120"/>
+                                <ColumnDefinition Width="120"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="25"/>
+                                <RowDefinition Height="53"/>
+                                <RowDefinition Height="53"/>
+                                <RowDefinition Height="53"/>
+                                <RowDefinition Height="53"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.ColumnSpan="2" Grid.Row="0" Text="STATUS:" FontAttributes="Bold" Margin="5,2,5,2" TextColor="DarkSlateGray" FontSize="15" FontFamily="Champagne &amp; Limousines" VerticalOptions="Center"/>
+
+                            <Label Grid.Column="0" Grid.Row="1" Text="Pallet Id" Margin="5,2,2,2" TextColor="DarkSlateGray" 
+                                   FontSize="12" FontFamily="Champagne &amp; Limousines" VerticalOptions="Start"/>
+                            <Entry Grid.Column="0" Grid.Row="1" x:Name="PalletId" Margin="5,5,2,2" FontSize="12" VerticalOptions="End"/>
+
+                            <Label Grid.Column="0" Grid.Row="2" Text="Status" Margin="5,2,2,2" TextColor="DarkSlateGray" 
+                                   FontSize="12" FontFamily="Champagne &amp; Limousines" VerticalOptions="Start"/>
+                            <Picker ItemsSource="{Binding Status}" ItemDisplayBinding="{Binding Name}" 
+                                    Grid.Column="0" Grid.Row="2" x:Name="Status" Margin="5,5,2,2" FontSize="12" VerticalOptions="End"/>
+
+                            <Label Grid.Column="1" Grid.Row="2" Text="Wrapped By" Margin="5,2,2,2" TextColor="DarkSlateGray" 
+                                   FontSize="12" FontFamily="Champagne &amp; Limousines" VerticalOptions="Start"/>
+                            <Picker ItemsSource="{Binding Wrappers}" ItemDisplayBinding="{Binding Name}" 
+                                    Grid.Column="1" Grid.Row="2" x:Name="WrappedBy" Margin="5,5,2,2" FontSize="12" VerticalOptions="End"/>
+
+                            <Label Grid.Column="0" Grid.Row="3" Text="Contents" Margin="5,2,2,2" TextColor="DarkSlateGray" 
+                                   FontSize="12" FontFamily="Champagne &amp; Limousines" VerticalOptions="Start"/>
+                            <Editor Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="2" Grid.Row="3" x:Name="Contents" Margin="5,2,2,2" 
+                                    FontSize="12" VerticalOptions="Center" HeightRequest="70"/>
+
+                            <Button Grid.Column="1" Grid.Row="1"  Margin="5,5,2,2" HeightRequest="35" VerticalOptions="End" x:Name="BtnAddItem"
+                                    Text="Add Item" BackgroundColor="#3897f0" TextColor="White" FontSize="12" Clicked="AddItem_Clicked"/>
+                        </Grid>
+                    </Frame>
+
+                    <Frame Grid.Row="0" Grid.Column="2" BorderColor="DarkSlateGray" Margin="0,5,5,5" Padding="0" HorizontalOptions="Start" VerticalOptions="Start">
+                        <Grid Padding="0" Margin="10,10,10,10">
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="35"/>
+                            </Grid.RowDefinitions>
+                            <Frame Grid.Row="0" BackgroundColor="#FF1E64AA" BorderColor="DarkSlateGray" Padding="0">
+                                <Grid Padding="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="60*"/>
+                                        <ColumnDefinition Width="70*"/>
+                                        <ColumnDefinition Width="85*"/>
+                                        <ColumnDefinition Width="86*"/>
+                                        <ColumnDefinition Width="75*"/>
+                                        <ColumnDefinition Width="75*"/>
+                                        <ColumnDefinition Width="75*"/>
+                                        <!--<ColumnDefinition Width="75*"/>-->
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Margin="10,0,10,0" FontSize="13" FontAttributes="Bold"  TextColor="White" Text="Item Id" VerticalOptions="Center" Grid.Column="0"/>
+                                    <Label Margin="10,0,10,0" FontSize="13" FontAttributes="Bold"  TextColor="White" Text="Quantity" VerticalOptions="Center" Grid.Column="1"/>
+                                    <Label Margin="10,0,10,0" FontSize="13" FontAttributes="Bold"  TextColor="White" Text="Barcode" VerticalOptions="Center" Grid.Column="2"/>
+                                    <Label Margin="10,0,10,0" FontSize="13" FontAttributes="Bold"  TextColor="White" Text="Description" VerticalOptions="Center" Grid.Column="3"/>
+                                    <Label Margin="10,0,10,0" FontSize="13" FontAttributes="Bold"  TextColor="White" Text="Outer" VerticalOptions="Center" Grid.Column="4"/>
+                                    <Label Margin="10,0,10,0" FontSize="13" FontAttributes="Bold"  TextColor="White" Text="Inner" VerticalOptions="Center" Grid.Column="5"/>
+                                    <Label Margin="10,0,10,0" FontSize="13" FontAttributes="Bold"  TextColor="White" Text="Wrapper Name" VerticalOptions="Center" Grid.Column="6"/>
+
+                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="0" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="1" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="2" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="3" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="4" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="5" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="6" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                    <!--<BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="7" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>-->
+
+                                </Grid>
+                            </Frame>
+                            <ListView Grid.Row="1" x:Name="ItemsListView"
+                             ItemsSource="{Binding PalletItems}"
+                             VerticalOptions="FillAndExpand"
+                             RefreshCommand="{Binding LoadItemsCommand}"
+                             IsPullToRefreshEnabled="true"
+                             IsRefreshing="{Binding IsBusy, Mode=OneWay}"
+                             CachingStrategy="RecycleElement"
+                             SeparatorVisibility="None"
+                             SelectionMode="None"
+                             HasUnevenRows="True">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <Frame Padding="0" BorderColor="DarkSlateGray">
+                                                <Grid Padding="0" RowSpacing="0">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="60*"/>
+                                                        <ColumnDefinition Width="70*"/>
+                                                        <ColumnDefinition Width="85*"/>
+                                                        <ColumnDefinition Width="86*"/>
+                                                        <ColumnDefinition Width="75*"/>
+                                                        <ColumnDefinition Width="75*"/>
+                                                        <ColumnDefinition Width="75*"/>
+                                                        <!--<ColumnDefinition Width="75*"/>-->
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Label FontSize="13" Margin="10,0,10,0" Text="{Binding Id}" VerticalOptions="Center" Grid.Column="0"/>
+                                                    <Label FontSize="13" Margin="10,0,10,0" Text="{Binding Quantity}" VerticalOptions="Center" Grid.Column="1"/>
+                                                    <Label FontSize="13" Margin="10,0,10,0" Text="{Binding Barcode}" VerticalOptions="Center" Grid.Column="2"/>
+                                                    <Label FontSize="13" Margin="10,0,10,0" Text="{Binding Description}" VerticalOptions="Center" Grid.Column="3"/>
+                                                    <Label FontSize="13" Margin="10,0,10,0" Text="{Binding Outer}" VerticalOptions="Center" Grid.Column="4"/>
+                                                    <Label FontSize="13" Margin="10,0,10,0" Text="{Binding Inner}" VerticalOptions="Center" Grid.Column="5"/>
+                                                    <Label FontSize="13" Margin="10,0,10,0" Text="{Binding WrapperName}" VerticalOptions="Center" Grid.Column="6"/>
+
+                                                    <!--<Image Source="Resources/edit.png" Grid.Column="7" Margin="5,0,0,0" WidthRequest="15" HorizontalOptions="Start" 
+                                                            VerticalOptions="Center"/>
+                                                    <Image Source="Resources/delete.png" Grid.Column="7" Margin="0,0,23,0" WidthRequest="15" HorizontalOptions="End" 
+                                                            VerticalOptions="Center" />-->
+
+                                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="0" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="1" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="2" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="3" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="4" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="5" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                                    <BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="6" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>
+                                                    <!--<BoxView BackgroundColor="DarkSlateGray" WidthRequest="1" Grid.Column="7" HorizontalOptions="EndAndExpand" VerticalOptions="FillAndExpand"/>-->
+                                                </Grid>
+                                            </Frame>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+
+                            <Grid Grid.Row="2" Padding="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="2"/>
+                                    <RowDefinition Height="*"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="100"/>
+                                    <ColumnDefinition Width="50"/>
+                                </Grid.ColumnDefinitions>
+                                <BoxView Grid.Row="0" Grid.ColumnSpan="4"  Margin="0" BackgroundColor="DarkSlateGray" HeightRequest="2" VerticalOptions="Start"/>
+                            </Grid>
+                        </Grid>
+                    </Frame>
+
+                </Grid>
+            </StackLayout>
+        </ScrollView>
+        <ContentView x:Name="popupLoadingView" BackgroundColor="#C0808080" Padding="10, 0" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+            <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                <StackLayout Orientation="Vertical" HeightRequest="220" WidthRequest="350" BackgroundColor="White">
+                    <Label Text ="Change Status" FontAttributes="Bold" FontSize="Medium" Margin="20,10,0,5" HorizontalOptions="Start" VerticalOptions="Start" TextColor="Black"/>
+                    <Frame BorderColor="DarkSlateGray" Margin="10,10,10,10" Padding="0" HorizontalOptions="Start" VerticalOptions="Start">
+                        <Grid Padding="0" Margin="20,10,10,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100"/>
+                                <ColumnDefinition Width="200"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Column="0" Grid.Row="0" Text="Status" Margin="5,5,5,5" TextColor="DarkSlateGray" FontSize="15" FontFamily="Champagne &amp; Limousines" VerticalOptions="Center"/>
+                            <Picker ItemsSource="{Binding Status}" ItemDisplayBinding="{Binding Name}" Grid.Column="1" Grid.Row="0" x:Name="ChangedStatus" Margin="5,5,5,5" FontSize="15"/>
+                            <Button Grid.Column="1" Grid.Row="1" WidthRequest="80" HorizontalOptions="StartAndExpand" Margin="5,5,40,5" HeightRequest="35" VerticalOptions="Start" BackgroundColor="#3897f0" TextColor="White" Text="Update" Clicked="Done_Clicked"/>
+                            <Button Grid.Column="1" Grid.Row="1" WidthRequest="80" HorizontalOptions="CenterAndExpand" Margin="80,5,5,5" HeightRequest="35" VerticalOptions="Start" BackgroundColor="#3897f0" TextColor="White" Text="Cancel" Clicked="Close_Clicked"/>
+
+                        </Grid>
+                    </Frame>
+                </StackLayout>
+            </StackLayout>
+        </ContentView>
+
+        <ContentView x:Name="popupAddItemView" BackgroundColor="#C0808080" Padding="10, 0" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+            <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                <StackLayout Orientation="Vertical" HeightRequest="500" WidthRequest="350" BackgroundColor="White">
+                    <Label Text ="Add Item" FontAttributes="Bold" FontSize="Medium" Margin="20,10,0,5" HorizontalOptions="Start" VerticalOptions="Start" TextColor="Black"/>
+                    <Frame BorderColor="DarkSlateGray" Margin="10,10,10,10" Padding="0" HorizontalOptions="Start" VerticalOptions="Start">
+                        <Grid Padding="0" Margin="20,10,10,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="150"/>
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="50"/>
+                                <RowDefinition Height="*"/>
+
+                            </Grid.RowDefinitions>
+
+                            <Label Grid.Column="0" Grid.Row="0" Text="Quatity" Margin="5,5,5,5" TextColor="DarkSlateGray" FontSize="15" FontFamily="Champagne &amp; Limousines" VerticalOptions="Center"/>
+                            <Editor Grid.Column="1" Grid.Row="0" Text="{Binding Item.Quatity}" x:Name="Quatity" Margin="5,5,5,5" FontSize="15"/>
+
+                            <Label Grid.Column="0" Grid.Row="1" Text="Barcode" Margin="5,5,5,5" TextColor="DarkSlateGray" FontSize="15" FontFamily="Champagne &amp; Limousines" VerticalOptions="Center"/>
+                            <Entry Grid.Column="1" Grid.Row="1" Text="{Binding Item.Barcode}" x:Name="Barcode" Margin="5,5,5,5" FontSize="15"/>
+
+                            <Label Grid.Column="0" Grid.Row="2" Text="Description" Margin="5,5,5,5" TextColor="DarkSlateGray" FontSize="15" FontFamily="Champagne &amp; Limousines" VerticalOptions="Center"/>
+                            <Entry Grid.Column="1" Grid.Row="2" Text="{Binding Item.Description}" x:Name="Description" Margin="5,5,5,5" FontSize="15"/>
+
+                            <Label Grid.Column="0" Grid.Row="3" Text="Outer" Margin="5,5,5,5" TextColor="DarkSlateGray" FontSize="15" FontFamily="Champagne &amp; Limousines" VerticalOptions="Center"/>
+                            <Entry Grid.Column="1" Grid.Row="3" Text="{Binding Item.Outer}" x:Name="Outer" Margin="5,5,5,5" FontSize="15"/>
+
+                            <Label Grid.Column="0" Grid.Row="4" Text="Inner" Margin="5,5,5,5" TextColor="DarkSlateGray" FontSize="15" FontFamily="Champagne &amp; Limousines" VerticalOptions="Center"/>
+                            <Entry Grid.Column="1" Grid.Row="4" Text="{Binding Item.Inner}" x:Name="Inner" Margin="5,5,5,5" FontSize="15"/>
+
+                            <Label Grid.Column="0" Grid.Row="5" Text="Wrapper Name" Margin="5,5,5,5" TextColor="DarkSlateGray" FontSize="15" FontFamily="Champagne &amp; Limousines" VerticalOptions="Center"/>
+                            <Entry Grid.Column="1" Grid.Row="5" Text="{Binding Item.WrapperName}" x:Name="WrapperName" Margin="5,5,5,5" FontSize="15"/>
+
+                            <Button Grid.Column="0" Grid.Row="6"  Margin="5,5,5,5" HeightRequest="35" VerticalOptions="Start" BackgroundColor="#3897f0" TextColor="White" Text="Done" Clicked="ItmDone_Clicked"/>
+                            <Button Grid.Column="1" Grid.Row="6"  Margin="5,5,5,5" HeightRequest="35" VerticalOptions="Start" BackgroundColor="#3897f0" TextColor="White" Text="Cancel" Clicked="ItemClose_Clicked"/>
+
+                        </Grid>
+                    </Frame>
+                </StackLayout>
+            </StackLayout>
+        </ContentView>
+
+    </AbsoluteLayout>
+</ContentPage>

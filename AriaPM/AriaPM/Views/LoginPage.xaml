@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+            xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+            x:Class="AriaPM.Views.LoginPage"             
+            BackgroundColor="#FF1E64AA" WidthRequest="850" HeightRequest="850">
+
+    <ContentPage.Content>
+        <Grid BackgroundColor="White" WidthRequest="350" HeightRequest="400" VerticalOptions="Center" HorizontalOptions="Center">
+
+            <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="250"/>
+                    <RowDefinition Height="*"/>
+             </Grid.RowDefinitions>
+
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" Margin="0,10,0,0" Grid.Row="0">
+                <Image Source="Resources/Header.jpg" WidthRequest="200" HeightRequest="100" HorizontalOptions="CenterAndExpand" VerticalOptions="Start" Margin="0,3,0,0"/>
+            </StackLayout>
+
+            <Grid Grid.Row="1" Margin="20,0,20,0">
+                <Label Grid.Row="0" Text="Sign in to your account" TextColor="DarkSlateGray"  HorizontalOptions="CenterAndExpand" FontSize="21" FontFamily="Champagne &amp; Limousines" FontAttributes="Bold"/>
+                <Entry x:Name="UserId" Completed="Password_Completed" Grid.Row="1" Margin="5,5,5,5" HeightRequest="35" VerticalOptions="Start" Placeholder="User Id" PlaceholderColor="#bababa" FontSize="16"/>
+                <Entry x:Name="Password" Completed="Password_Completed" Grid.Row="2" Margin="5,5,5,5" HeightRequest="35" VerticalOptions="Start" IsPassword="True"  Placeholder="Password" PlaceholderColor="#bababa" FontSize="16"/>
+                <Button  Grid.Row="3" Margin="5,5,5,5" Clicked="Button_Clicked" HeightRequest="35" VerticalOptions="Start"  Text="Login" BackgroundColor="#3897f0" TextColor="White"/>
+                <Label Grid.Row="4" Text="Forgot Password?" TextColor="#485992" HorizontalOptions="Center" Margin="0,10,0,0" FontSize="12"/>                
+            </Grid>            
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
